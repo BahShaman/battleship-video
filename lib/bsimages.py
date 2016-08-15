@@ -19,25 +19,65 @@ draw = ImageDraw.Draw(img)
 
 class BShipGrid:
 
-    def __init__(self, drawing, x, y, h, w, size):
+    ox = 0
+    oy = 0
+    dataarray = ()
+
+    def __init__(self):
+        pass
+
+    def adddata(self, col,row):
+        pass
+
+    def draw(self, drawing, x, y, h, w, size):
+        self.ox = x + 15
+        self.oy = y + 15
+        self.drawgrid(drawing, x, y, h, w, size)
+        self.drawdata(drawing, x, y, h, w, size)
+
+    def drawdata(self, drawing, x, y, h, w, size):
+        ox = self.ox
+        oy = self.oy
+        letter=0
         for i in range(0,h*size+size,h*size/size):
+            letter=letter+1
+            number=0
             #print x
             for j in range(0,w*size+size,w*size/size):
-                print i,j
-                draw.line((i+x, 0+y, i+x, j+y), "blue", 3)
-                draw.line((0+x, j+y, i+x, j+y), "blue", 3)
+                number=number+1
+                if (number == 7 and letter==7):
+                    draw.rectangle([(i+ox+5, j+oy+5), (i+ox+15, j+oy+15)], fill="#FF0000")
+
+    def drawgrid(self, drawing, x, y, h, w, size):
+        ox = self.ox
+        oy = self.oy
+        left=0
+        top=0
+        letter=0
+        number=0
+        for i in range(0,h*size+size,h*size/size):
+            letter=letter+1
+            number=0
+            #print x
+            for j in range(0,w*size+size,w*size/size):
+                number=number+1
+                if not (i == 0 and j == 0):
+                    if i == 0:
+                        left=left+1
+                        draw.text((i+x, j+y), str(left))
+                    if j == 0:
+                        top=top+1
+                        draw.text((i+x, j+y), str(chr(top+64)))
+                print i,j,letter,number
+                draw.line((i+ox, 0+oy, i+ox, j+oy), "blue", 3)
+                draw.line((0+ox, j+oy, i+ox, j+oy), "blue", 3)
 
 
-bs = BShipGrid(draw,15,15,20,20,10)
-bsz = BShipGrid(draw,250,15,20,20,10)
-"""
-for x in range(W):
-    for y in range(H):
-        color = (x % 255, y % 255, (x % (y+1)) % 255)
-        draw.point((x,y), fill=color)
+bs = BShipGrid()
+bs.adddata(7,7)
+bs.draw(draw,15,15,20,20,10)
+bsz = BShipGrid()
+bs.adddata(6,6)
+bsz.draw(draw,250,15,20,20,10)
 
-draw.line((0, H/2, W, H/2), "yellow")
-draw.rectangle([(200, 60), (100, 120)], outline="#FF00FF")
-draw.text((20, 40), "quickies.seriot.ch")
-"""
 img.save("img.png", "PNG")
