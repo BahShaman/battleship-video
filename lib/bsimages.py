@@ -4,8 +4,8 @@ from PIL import Image, ImageDraw
 
 #import Image, ImageDraw
 
-H = 500
-W = 500
+H = 250
+W = 1000
 
 GW = 20
 GH = 20
@@ -14,19 +14,26 @@ GZ = 10
 OX = 10
 OY = 15
 
-img = Image.new("RGB", (W, H), "black")
+img = Image.new("RGBA", (W, H), (255,0,0,0))
 draw = ImageDraw.Draw(img)
 
 class BShipGrid:
 
+    gridrows=10
+    gridcols=10
     ox = 0
     oy = 0
     dataarray = ()
 
     def __init__(self):
+        self.dataarray = [[0 for x in range(self.gridrows)] for y in range(self.gridcols)]
         pass
 
+    def getdata(self):
+        print self.dataarray
+
     def adddata(self, col,row):
+        self.dataarray[col][row]=1
         pass
 
     def draw(self, drawing, x, y, h, w, size):
@@ -45,8 +52,9 @@ class BShipGrid:
             #print x
             for j in range(0,w*size+size,w*size/size):
                 number=number+1
-                if (number == 7 and letter==7):
-                    draw.rectangle([(i+ox+5, j+oy+5), (i+ox+15, j+oy+15)], fill="#FF0000")
+                print "number,letter",number,letter
+                if (self.dataarray[number-2][letter-2]==1):
+                    draw.rectangle([(i+ox+2, j+oy+2), (i+ox+18, j+oy+18)], fill="#666666")
 
     def drawgrid(self, drawing, x, y, h, w, size):
         ox = self.ox
@@ -75,9 +83,14 @@ class BShipGrid:
 
 bs = BShipGrid()
 bs.adddata(7,7)
+bs.adddata(6,6)
 bs.draw(draw,15,15,20,20,10)
 bsz = BShipGrid()
-bs.adddata(6,6)
-bsz.draw(draw,250,15,20,20,10)
+bsz.adddata(1,9)
+bsz.adddata(3,6)
+bsz.draw(draw,750,15,20,20,10)
 
-img.save("img.png", "PNG")
+bs.getdata()
+
+
+img.save("img.gif", "gif",transparency=0)
