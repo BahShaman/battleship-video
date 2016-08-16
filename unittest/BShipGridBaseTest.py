@@ -27,7 +27,7 @@ class BShipGridBaseTest(unittest.TestCase):
         self.b.addshot(1,1)
         self.b.addshot(1,2)
         self.b.addshot(3,4)
-        self.img = Image.new("RGB", (W, H), (0,255,0,0))
+        self.img = Image.new("RGBA", (W, H), (0,255,0,0))
         self.drawing = ImageDraw.Draw(self.img)
 
     def test_firsttest(self):
