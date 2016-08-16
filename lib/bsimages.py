@@ -14,7 +14,7 @@ GZ = 10
 OX = 10
 OY = 15
 
-img = Image.new("RGBA", (W, H), (255,0,0,0))
+img = Image.new("RGBA", (W, H), (0,0,255,20))
 draw = ImageDraw.Draw(img)
 
 class BShipGrid:
@@ -94,3 +94,4 @@ bs.getdata()
 
 
 img.save("img.gif", "gif",transparency=0)
+img.save("img.png", "PNG",)
