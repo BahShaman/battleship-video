@@ -1,0 +1,43 @@
+S-->A	A-->S
+A1	c1
+j5!	A1!
+J4!	A2!
+J6!	A3!
+splash
+edit...
+J3!
+sink-splash
+	B2
+E9!	C3!
+E8	C4
+D9!	C2
+C9!	D3!
+F9!	B3
+G9!	
+sink-splash
+	E3!
+B5!	F3!
+A5	G3!
+sink-splash
+B4	E5
+C5!	F6!
+D5!
+sink-splash
+	G6
+H3	E6!
+I7	D6!
+F6	C6!
+sink-splash
+E2!	H8
+F2!	I9
+D2!
+sink-splash
+	B8
+H4	E9
+A10	H5
+B7!	J2
+J10	H1!
+J2	H2
+F8	G1
+end of first clip
+
