@@ -72,49 +72,63 @@ class BShipGrid:
                 drawing.line((0 + ox + gx, j * sy + oy + gy, i * sx + ox + gx, j * sy + oy + gy), 'blue', 2)
             
     def hgridline(self, x, y, w, h, n):
-        pass
-
-    
-    def drawgrid(self, drawing, x, y, w, h):
         hlinelength = w
         vlinelength = h
-        hdivisions = self._gridrows + 1
-        vdivisions = self._gridcols + 1
         hdivsize = w / self._gridrows
         vdivsize = h / self._gridrows
+        #calulate each point
+        hxstrt = x + self._textoffset
+        hystrt = y + self._textoffset + n * hdivsize
+        hxstop = x + self._textoffset + hlinelength
+        hystop = y + self._textoffset + n * hdivsize
+        #print 'h', (i, j), (x, y), (hxstrt, hystrt, hxstop, hystop)
+        #print 'i*hdivsize', i * hdivsize
+        return (hxstrt, hystrt, hxstop, hystop)
+
+    def vgridline(self, x, y, w, h, n):
+        hlinelength = w
+        vlinelength = h
+        hdivsize = w / self._gridrows
+        vdivsize = h / self._gridrows
+        #calculate each point
+        vxstrt = x + self._textoffset + n * vdivsize
+        vystrt = y + self._textoffset 
+        vxstop = x + self._textoffset + n * vdivsize
+        vystop = y + self._textoffset + vlinelength
+        #print 'v', (i, j), (x, y), (vxstrt, vystrt, vxstop, vystop)
+        return (vxstrt, vystrt, vxstop, vystop)
+    
+    def shiprect(self, x, y, w, h, row,col):
+        hdivsize = w / self._gridrows
+        vdivsize = h / self._gridrows
+
+        x1 = x + self._textoffset + col * hdivsize
+        y1 = y + self._textoffset + row * vdivsize
+        x2 = x + self._textoffset + col * hdivsize + hdivsize
+        y2 = y + self._textoffset + row * vdivsize + vdivsize
+        return (x1,y1, x2,y2)
+
+
+    def drawgrid(self, drawing, x, y, w, h):
+        hdivisions = self._gridrows + 1
+        vdivisions = self._gridcols + 1
         for i in range(hdivisions):
             for j in range(vdivisions):
-                hxstrt = x + self._textoffset
-                hystrt = y + self._textoffset + j * hdivsize
-                hxstop = x + self._textoffset + hlinelength
-                hystop = y + self._textoffset + j * hdivsize
-                #print 'h', (i, j), (x, y), (hxstrt, hystrt, hxstop, hystop)
-                #print 'i*hdivsize', i * hdivsize
-                vxstrt = x + self._textoffset + i * vdivsize
-                vystrt = y + self._textoffset 
-                vxstop = x + self._textoffset + i * vdivsize
-                vystop = y + self._textoffset + vlinelength
-                #print 'v', (i, j), (x, y), (vxstrt, vystrt, vxstop, vystop)
-                drawing.line((hxstrt, hystrt, hxstop, hystop), 'blue', 2)
-                drawing.line((vxstrt, vystrt, vxstop, vystop), 'red', 2)
+                hline = self.hgridline(x,y,w,h,j)
+                vline = self.vgridline(x,y,w,h,i)
+                drawing.line(hline, 'blue', 2)
+                drawing.line(vline, 'red', 2)
 
         
 
     
     def drawdata(self, drawing, x, y, w, h):
-        ox = x
-        oy = y
-        gy = x + self._textoffset
-        gx = y + self._textoffset
-        sx = w / (self._gridrows + 1)
-        sy = h / (self._gridcols + 1)
         for i in range(10):
             for j in range(10):
                 if self._data[i][j] > 0:
                     print 'SHIP'
-                    drawing.rectangle([
-                        (i * sx + ox + gx, j * sy + oy + gy),
-                        (i * sx + ox + gx + sx, j * sy + oy + gy + sy)], fill = '#666666')
+                    rect = self.shiprect(x,y,w,h,i,j)
+                    drawing.rectangle(rect, fill = '#666666')
         
 
     

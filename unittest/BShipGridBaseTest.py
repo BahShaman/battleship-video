@@ -48,6 +48,11 @@ class BShipGridBaseTest(unittest.TestCase):
         #self.img.save("test_draw_large.gif", "gif")#,transparency=0)
         self.img.save("test_draw_large.png", "PNG",)
 
+    def test_shiprect_0_0(self):
+        points = self.b.shiprect(0,0,100,100,0,0)
+        print points
+        self.assertEqual((25,25,35,35), points, "shiprect does not calc right")
+
     def tearDown(self):
         self.b = None
         self.img = None
