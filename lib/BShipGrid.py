@@ -10,7 +10,7 @@ class BShipGrid:
     _data = None
     _gridrows = 10
     _gridcols = 10
-    _textoffset = 10
+    _textoffset = 25
     
     def __init__(self, playername):
         self._playername = playername
@@ -71,7 +71,8 @@ class BShipGrid:
                 drawing.line((l1x1, l1y1, l1x2, l1y2), 'blue', 2)
                 drawing.line((0 + ox + gx, j * sy + oy + gy, i * sx + ox + gx, j * sy + oy + gy), 'blue', 2)
             
-        
+    def hgridline(self, x, y, w, h, n):
+        pass
 
     
     def drawgrid(self, drawing, x, y, w, h):
@@ -79,24 +80,24 @@ class BShipGrid:
         vlinelength = h
         hdivisions = self._gridrows + 1
         vdivisions = self._gridcols + 1
-        hdivsize = w / hdivisions
-        vdivsize = h / vdivisions
+        hdivsize = w / self._gridrows
+        vdivsize = h / self._gridrows
         for i in range(hdivisions):
             for j in range(vdivisions):
-                hxstrt = x + self._textoffset + i * vdivsize
+                hxstrt = x + self._textoffset
                 hystrt = y + self._textoffset + j * hdivsize
-                hxstop = x + self._textoffset + i * vdivsize + hlinelength
+                hxstop = x + self._textoffset + hlinelength
                 hystop = y + self._textoffset + j * hdivsize
-                print 'h', (i, j), (x, y), (hxstrt, hystrt, hxstop, hystop)
-                print 'i*hdivsize', i * hdivsize
+                #print 'h', (i, j), (x, y), (hxstrt, hystrt, hxstop, hystop)
+                #print 'i*hdivsize', i * hdivsize
                 vxstrt = x + self._textoffset + i * vdivsize
-                vystrt = y + self._textoffset + j * hdivsize
+                vystrt = y + self._textoffset 
                 vxstop = x + self._textoffset + i * vdivsize
-                vystop = y + self._textoffset + j * hdivsize + vlinelength
-                print 'v', (i, j), (x, y), (vxstrt, vystrt, vxstop, vystop)
+                vystop = y + self._textoffset + vlinelength
+                #print 'v', (i, j), (x, y), (vxstrt, vystrt, vxstop, vystop)
                 drawing.line((hxstrt, hystrt, hxstop, hystop), 'blue', 2)
                 drawing.line((vxstrt, vystrt, vxstop, vystop), 'red', 2)
-            
+
         
 
     
@@ -118,6 +119,7 @@ class BShipGrid:
 
     
     def drawtext(self, drawing, x, y, w, h):
+        pass
         ox = x
         oy = y
         gy = x
