@@ -34,7 +34,7 @@ class BShipGridBaseTest(unittest.TestCase):
         self.b.getdata()
 
     def test_draw(self):
-        self.b.draw(self.drawing,10,10, 100, 100)
+        self.b.draw(self.drawing,10,10, 175, 175)
         #self.img.save("test_draw.gif", "gif")#,transparency=0)
         self.img.save("test_draw.png", "PNG",)
 

@@ -32,6 +32,9 @@ class TheGame():
         a.markship("C6")
 
         a.markship("H1")
+        a.markship("I1")
+        a.markship("I10")
+        
         
         b = BShipGrid("Alyssa")
 
@@ -55,18 +58,58 @@ class TheGame():
         b.markship("D2")
 
         b.markship("B7")
+        b.markship("B8")
 
         self.b = b
         self.a = a
 
     def save(self,filename):
 
-        self.b.draw(self.drawing,10,10, 150, 150)
-        self.a.draw(self.drawing,300,10, 150, 150)
+        self.a.draw(self.drawing,10,10, 150, 150)
+        self.b.draw(self.drawing,750,10, 150, 150)
         #self.img.save("test_draw_small.gif", "gif")#,transparency=0)
         self.img.save(filename+".png", "PNG",)
 
 
 if __name__ == '__main__':
     g = TheGame()
-    g.save("master")
+    #shots = ["A3","A4","A5"]
+    shots = []
+    with open('./data/data.txt') as f:
+        lines = f.read().splitlines()
+    
+    for line in lines:
+        data = line.split("\t")
+        print data
+        shots += data[0:]
+
+    x = 0
+    t = 0
+    print "len of shots", len(shots)
+    for shot in shots:
+        t = t+1
+        print t
+        print shot
+        if shot.find("!") > 0:
+            stype = "HIT"
+            cshot = shot[:-1]
+        elif shot.find("*") > 0:
+            stype = "SINK"
+            cshot = shot[:-1]
+        else:
+            print "skipping", shot
+            continue
+        if t % 2 == 1:
+            name="simon"
+            g.b.markshot(cshot)
+        else:
+            name="alyssa"
+            g.a.markshot(cshot)
+        print cshot
+        sx = "%02d" % (x,)
+        g.save("shots/"+sx+"-master-"+name+"-"+cshot+"-"+stype)
+        x = x+1
+
+        
+
+

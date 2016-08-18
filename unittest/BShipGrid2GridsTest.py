@@ -37,7 +37,7 @@ class BShipGridBaseTest(unittest.TestCase):
     def test_draw_a_location1(self):
         self.a.draw(self.drawing,10,10, 200, 200)
         self.drawing.line((10,10,210,10),"yellow",1)
-        self.drawing.ellipse((10,10,20,20),"green",1)
+        self.drawing.ellipse((450,450,470,470),"green",1)
         self.drawing.ellipse((32,32,27,27),"magenta",1)
         #self.img.save("test_draw.gif", "gif")#,transparency=0)
         self.img.save("test_draw_a_location1.png", "PNG",)

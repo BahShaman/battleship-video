@@ -1,5 +1,7 @@
 # Source Generated with Decompyle++
 # File: BShipGrid-Copy.pyc (Python 2.7)
+from PIL import ImageFont
+
 
 '''
 BShipGrid
@@ -10,11 +12,18 @@ class BShipGrid:
     _data = None
     _gridrows = 10
     _gridcols = 10
-    _textoffset = 25
+    _textoffset = 10
+    _gridfont = None
+    _namefont = None
     
     def __init__(self, playername):
         self._playername = playername
         self._data = [ [ 0 for x in range(self._gridrows) ] for y in range(self._gridcols) ]
+        #self._gridfont = ImageFont.load("./verdana.ttf")
+#        self._gridfont = ImageFont.truetype("verdana.ttf",14)
+#        self._gridfont = ImageFont.truetype("Verdana",14)
+        self._gridfont = ImageFont.load_default()
+        #self._namefont = ImageFont.truetype("verdana.ttf",20)
 
     
     def getdata(self):
@@ -120,7 +129,28 @@ class BShipGrid:
         x2 = int(x + self._textoffset + col * hdivsize + hdivsize - hdivsize * shotscale)
         y2 = int(y + self._textoffset + row * vdivsize + vdivsize - vdivsize * shotscale)
         print "returning rect from shot",(x1,y1, x2,y2)
-        return [(x1,y1), (x2,y2)]
+        return (x1,y1, x2,y2)
+
+    def htextcoord(self, x, y, w, h, row, col):
+        hdivsize = w / self._gridrows
+        vdivsize = h / self._gridrows
+        x1 = int(x + (col+1) * hdivsize - hdivsize)
+        y1 = int(y + (row+1) * vdivsize - vdivsize/2)
+        print "returning coord from text",(x1,y1)
+        return [(x1,y1)]
+
+
+    def vtextcoord(self, x, y, w, h, row, col):
+        hdivsize = w / self._gridrows
+        vdivsize = h / self._gridrows
+        x1 = int(x + (col+1) * hdivsize - hdivsize/2)
+        y1 = int(y + (row+1) * vdivsize - vdivsize)
+        print "returning coord from htext",(x1,y1)
+        return [(x1,y1)]
+
+
+    def namecoord(self, x, y, w, h):
+        pass
 
     def drawgrid(self, drawing, x, y, w, h):
         hdivisions = self._gridrows + 1
@@ -144,26 +174,16 @@ class BShipGrid:
 
     
     def drawtext(self, drawing, x, y, w, h):
-        ox = x
-        oy = y
-        gy = x
-        gx = y
-        px = -5
-        py = -3
-        sx = w / (self._gridrows + 1)
-        sy = h / (self._gridcols + 1)
-        for i in range(self._gridrows + 1):
-            for j in range(self._gridcols + 1):
-                if i == 0:
-                    if j == 0 or i == 0:
-                        pass
-                        #drawing.text((i * sx + ox + gx + px, j * sy + oy + gy + py), str(j))
+        for i in range(self._gridrows):
+            for j in range(self._gridcols):
+                if j == 0 or i == 0:
+                    if i == 0:
+                        coord = self.vtextcoord(x,y,w,h,i,j)
+                        drawing.text(coord, str(j+1))
                     if j == 0:
-                        pass
-                        #drawing.text((i * sx + ox + gx + px, j * sy + oy + gy + py), str(chr(i + 64)))
-                    
-        
-
+                        coord = self.htextcoord(x,y,w,h,i,j)
+                        drawing.text(coord, str(chr(i + 1 + 64)), font=self._gridfont)                    
+            
     
     def drawshot(self, drawing, x, y, w, h):
         for i in range(self._gridrows):
@@ -174,6 +194,5 @@ class BShipGrid:
                     print "drawing rect from ", x,y,w,h,i,j,rect
                     #drawing.rectangle(rect, fill = '#00FF00')
                     drawing.ellipse(rect, fill = '#FF0000')
-                    drawing.ellipse((10,10,30,30), fill = '#FFFF00')
 
 
