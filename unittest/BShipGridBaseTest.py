@@ -45,6 +45,8 @@ class BShipGridBaseTest(unittest.TestCase):
 
     def test_draw_large(self):
         self.b.draw(self.drawing,10,10, 300, 300)
+        self.drawing.ellipse([(27,27),(32,32)],"magenta",1)
+
         #self.img.save("test_draw_large.gif", "gif")#,transparency=0)
         self.img.save("test_draw_large.png", "PNG",)
 
@@ -52,6 +54,11 @@ class BShipGridBaseTest(unittest.TestCase):
         points = self.b.shiprect(0,0,100,100,0,0)
         print points
         self.assertEqual((25,25,35,35), points, "shiprect does not calc right")
+
+    def test_shotrect_0_0(self):
+        points = self.b.shotrect(0,0,100,100,0,0)
+        print points
+        self.assertEqual((27,27,33,33), points, "shotrect does not calc right")
 
     def tearDown(self):
         self.b = None

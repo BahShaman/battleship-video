@@ -61,8 +61,8 @@ class TheGame():
 
     def save(self,filename):
 
-        self.b.draw(self.drawing,10,50, 150, 150)
-        self.a.draw(self.drawing,10,10, 150, 150)
+        self.b.draw(self.drawing,10,10, 150, 150)
+        self.a.draw(self.drawing,300,10, 150, 150)
         #self.img.save("test_draw_small.gif", "gif")#,transparency=0)
         self.img.save(filename+".png", "PNG",)
 
