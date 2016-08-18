@@ -33,7 +33,11 @@ class TheGame():
 
         a.markship("H1")
         a.markship("I1")
+        
+        a.markship("G10")
+        a.markship("H10")
         a.markship("I10")
+        a.markship("J10")
         
         
         b = BShipGrid("Alyssa")
@@ -84,6 +88,11 @@ if __name__ == '__main__':
         shots += data[0:]
 
     x = 0
+
+    sx = "%02d" % (x,)
+    g.save("shots/"+sx+"-master-start-game")
+
+    x = 1
     t = 0
     print "len of shots", len(shots)
     for shot in shots:
@@ -97,7 +106,12 @@ if __name__ == '__main__':
             stype = "SINK"
             cshot = shot[:-1]
         else:
+            #if t % 2 == 1:
             print "skipping", shot
+            #name="simon"
+            #cshot=shot
+            #stype="miss"
+            #g.b.markmiss(cshot)
             continue
         if t % 2 == 1:
             name="simon"
